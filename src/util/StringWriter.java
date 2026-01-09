@@ -54,14 +54,19 @@ public final class StringWriter {
 		
 		int key = KeyEvent.getExtendedKeyCodeForChar(letter);
 		
-			if (key != KeyEvent.VK_UNDEFINED && keycodeExists(key)) {
+		if (key != KeyEvent.VK_UNDEFINED && keycodeExists(key)) {
 				
 			if (needsShift(letter)) {
 				pressWithShift(key, robot);
 			}
 			else {
-				robot.keyPress(key);
-				robot.keyRelease(key);
+			    try {
+			    		robot.keyPress(key);
+					robot.keyRelease(key);
+			    } catch (IllegalArgumentException e) {
+			        robot.keyPress(KeyEvent.VK_SPACE);
+			        robot.keyRelease(KeyEvent.VK_SPACE);
+			    }
 			}
 		}
 	}
