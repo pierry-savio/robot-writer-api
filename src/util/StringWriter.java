@@ -6,7 +6,31 @@ import java.awt.event.KeyEvent;
 
 public final class StringWriter {
 	
-	public StringWriter() {};
+	private int initialDelayInSeconds;
+	private int delay;
+	
+	public StringWriter() {
+		initialDelayInSeconds = 5;
+		delay = 0;
+	}
+	
+	public void write(String txt) throws AWTException {
+		
+		Robot robot = new Robot();
+		robot.setAutoDelay(delay);
+		robot.delay(initialDelayInSeconds*1000);
+			
+		for (int i = 0; i<txt.length(); i++) {
+			char letter = txt.charAt(i);
+			
+			if(isItASpecialKey(letter)) {
+				specialKeyPressRelease(letter, robot);
+			}
+			else {
+				keyPressRelease(letter, robot);
+			}
+		}
+	}
 	
 	public void write(String txt, int initialDelayInSeconds, int delay) throws AWTException {
 		
